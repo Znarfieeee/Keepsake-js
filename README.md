@@ -33,3 +33,8 @@
   ## NOTE
   > **Update ormconfig.json, .env with your MySQL credentials**
 
+  ### Git pull instructions
+
+  ### Git push instructions
+
+  ### Git checking commands
