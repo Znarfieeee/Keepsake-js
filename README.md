@@ -32,6 +32,9 @@
   ```
   ## NOTE
   > **Update ormconfig.json, .env with your MySQL credentials**
+  > ```
+    npm i express typeorm reflect-metadata mysql2
+    ```
 
   ### Git pull instructions
   ```

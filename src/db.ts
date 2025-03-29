@@ -5,7 +5,6 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 
-
 export const initializeDatabase = async () => {
     await createConnection({
         type: 'mysql',
