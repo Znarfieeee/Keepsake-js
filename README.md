@@ -34,7 +34,29 @@
   > **Update ormconfig.json, .env with your MySQL credentials**
 
   ### Git pull instructions
-
+  ```
+  git pull origin <branch-name>
+  ```
   ### Git push instructions
+  1. Stage all changes
+  ```
+  git add .
+  ```
+  2. Commit changes
+  ```
+  git commit -m "unsa imong message sa kani nga commit"
+  ```
+  3. Push changes to remote repo
+  ```
+  git push origin <pangan sa imong branch>
+  ```
 
   ### Git checking commands
+  1. Check kung asa ka nga branch
+  ```
+  git branch
+  ```
+  2. Check sa status sa file
+  ```
+  git status
+  ```
