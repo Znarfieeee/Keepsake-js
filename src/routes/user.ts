@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/', getAll);
 router.get('/:id', getById);
 router.post('/', createSchema, create);
-// router.put('/:id', updateSchema, update);
+router.put('/:id', updateSchema, update);
 // router.delete('/:id', _delete);
 
 export default router;
@@ -41,6 +41,15 @@ async function create(req: Request, res: Response, next: NextFunction): Promise<
     }
 }
 
+async function update(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+        await userService.update(Number(req.params.id), req.body);
+        res.json({ message: 'User updated' });
+    } catch (error) {
+        next(error);
+    }
+}
+
 function createSchema(req: Request, res: Response, next: NextFunction): void {
     const schema = Joi.object({
         firstName: Joi.string().required(),
@@ -50,15 +59,13 @@ function createSchema(req: Request, res: Response, next: NextFunction): void {
     validateRequest(req, next, schema);
 }
 
-// function updateSchema(req: Request, res: Response, next: NextFunction): void {
-//     const schema  = Joi.object({
-//         title: Joi.string().empty(''),
-//         firstName: Joi.string().empty(''),
-//         lastName: Joi.string().empty(''),
-//         role: Joi.number().valid(Roles.Admin, Roles.User).empty(''),
-//         email: Joi.string().email().empty(''),
-//         password: Joi.string().min(6).empty(''),
-//         confirmPassword: Joi.string().valid(Joi.ref('password')).empty(''),
-//     }).with('password', 'confirmPassword');
-//     validateRequest(req, next, schema);
-// }
+function updateSchema(req: Request, res: Response, next: NextFunction): void {
+    const schema = Joi.object({
+        firstName: Joi.string().empty(''),
+        lastName: Joi.string().empty(''),
+        email: Joi.string().email().empty(''),
+        password: Joi.string().min(6).empty(''),
+        confirmPassword: Joi.string().valid(Joi.ref('password')).empty(''),
+    }).with('password', 'confirmPassword');
+    validateRequest(req, next, schema);
+}

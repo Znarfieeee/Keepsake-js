@@ -12,6 +12,8 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "emitDecoratorMetadata": true, 
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
     "experimentalDecorators": true
   },
   "include": ["**/*.ts"],
