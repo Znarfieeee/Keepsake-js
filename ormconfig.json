@@ -3,7 +3,7 @@
     "type": "mysql",
     "synchronize": true,
     "logging": false,
-    "entities": ["dist/**/*.routes.js"],
+    "entities": ["dist/**/*.entity.js"],
     "migrations": ["dist/migration/**/*.js"],
     "subscribers": ["dist/subscriber/**/*.js"],
     "cli": {
