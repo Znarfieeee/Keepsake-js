@@ -1,28 +1,29 @@
+import userRoutes from './routes/user';
 import 'reflect-metadata';
-import express, { Application } from 'express';
+import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import { initializeDatabase } from './db';
-import userRoutes from './routes/user-router'; // Ensure this path is correct
+import { errorHandler } from '../_middleware/error-handler';
+import * as dotenv from 'dotenv';
 
-const app: Application = express();
+dotenv.config()
+const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-// Register routes
-app.use('/api/users', userRoutes); // Register the user-router here
+// Register user routes
+app.use('/users', userRoutes);
 
-// Start the server
-const PORT = process.env.PORT || 3000;
+// Global Error Handler
+app.use((err: string | Error, req: Request, res: Response, next: NextFunction) => {
+    errorHandler(err, req, res, next);
+});
 
-initializeDatabase()
-    .then(() => {
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
-        });
-    })
-    .catch((error) => {
-        console.error('Database connection error:', error);
-        process.exit(1);
-    });
+const port = Number(process.env.PORT) || 4000;
+
+initializeDatabase().then(() => {
+    app.listen(port, () => console.log(`Server listening on port ${port}`));
+}).catch(error => console.log('Database connection error:', error));
