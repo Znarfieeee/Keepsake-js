@@ -8,6 +8,13 @@
 
 ## Project Overview
   > To create a basic User CRUD Management
+
+  This REST API provides endpoints for managing users with complete CRUD operations:
+  - Create users
+  - Read user information (individual or listing all)
+  - Update user details
+  - Delete users
+  
   ### Set-up instructions
   
   1. _Go to your desired directory to work with and open cmd from that address_
@@ -63,3 +70,80 @@
   ```
   git status
   ```
+
+## API Documentation
+
+### User Endpoints
+
+#### GET /users
+- **Description**: Get a list of all users
+- **Response**: Array of user objects
+- **Example Response**:
+```json
+[
+  {
+    "id": 1,
+    "email": "john@example.com",
+    "firstName": "John",
+    "lastName": "Doe"
+  },
+  {
+    "id": 2,
+    "email": "jane@example.com",
+    "firstName": "Jane",
+    "lastName": "Smith"
+  }
+]
+```
+
+#### GET /users/:id
+- **Description**: Get a single user by ID
+- **Parameters**: id (path parameter)
+- **Response**: User object
+- **Example Response**:
+```json
+{
+  "id": 1,
+  "email": "john@example.com",
+  "firstName": "John",
+  "lastName": "Doe"
+}
+```
+
+#### POST /users
+- **Description**: Create a new user
+- **Request Body**:
+```json
+{
+  "email": "new@example.com",
+  "firstName": "New",
+  "lastName": "User"
+}
+```
+- **Response**: Success message
+- **Example Response**:
+```json
+{
+  "message": "User created"
+}
+```
+
+#### DELETE /users/:id
+- **Description**: Delete a user by ID
+- **Parameters**: id (path parameter)
+- **Response**: Success message
+- **Example Response**:
+```json
+{
+  "message": "User deleted successfully"
+}
+```
+
+## Running the Application
+
+To start the development server:
+```
+npm run dev
+```
+
+The server will run on port 4000 by default (or the port specified in your .env file).

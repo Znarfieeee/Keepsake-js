@@ -6,7 +6,7 @@ export const userService = {
     getById,
     create,
     // update,
-    // delete: _delete,
+    delete: _delete,
 };
 
 // Get all users
@@ -39,4 +39,14 @@ async function create(params: {
     // Save the new user to the database
     const user = entityManager.create(User, params); // Create a new User instance
     await entityManager.save(user); // Save the user to the database
+}
+
+// Delete a user
+async function _delete(id: number): Promise<void> {
+    const entityManager = getManager();
+    const user = await entityManager.findOne(User, { where: { id } });
+    
+    if (!user) throw 'User not found';
+    
+    await entityManager.remove(user);
 }

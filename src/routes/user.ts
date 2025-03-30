@@ -10,7 +10,7 @@ router.get('/', getAll);
 router.get('/:id', getById);
 router.post('/', createSchema, create);
 // router.put('/:id', updateSchema, update);
-// router.delete('/:id', _delete);
+router.delete('/:id', _delete);
 
 export default router;
 
@@ -48,6 +48,15 @@ function createSchema(req: Request, res: Response, next: NextFunction): void {
         email: Joi.string().email().required(),
     });
     validateRequest(req, next, schema);
+}
+
+async function _delete(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+        await userService.delete(Number(req.params.id));
+        res.json({ message: 'User deleted successfully' });
+    } catch (error) {
+        next(error);
+    }
 }
 
 // function updateSchema(req: Request, res: Response, next: NextFunction): void {
