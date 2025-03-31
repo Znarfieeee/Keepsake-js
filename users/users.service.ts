@@ -1,13 +1,42 @@
 import { getManager } from 'typeorm';
-import { User } from '../src/entity/User';
+import { User } from '../src/entity/user'; // Corrected casing
+// ...existing code...
 
 export const userService = {
     getAll,
     getById,
     create,
-    // update,
+    update,
     // delete: _delete,
 };
+
+async function update(id: number, params: { 
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+    password?: string;
+}): Promise<User> {
+    const entityManager = getManager(); // Get the EntityManager
+
+    // Find the user by ID
+    const user = await entityManager.findOne(User, { where: { id } });
+    if (!user) throw new Error('User not found');
+
+    // Check if the email is being updated and already exists
+    if (params.email && params.email !== user.email) {
+        const emailExists = await entityManager.findOne(User, { where: { email: params.email } });
+        if (emailExists) {
+            throw new Error(`Email "${params.email}" is already registered`);
+        }
+    }
+
+    // Merge the updated fields into the user object
+    Object.assign(user, params);
+
+    // Save the updated user to the database
+    return await entityManager.save(user);
+}
+
 
 // Get all users
 async function getAll(): Promise<User[]> {
